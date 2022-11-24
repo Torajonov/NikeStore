@@ -1,0 +1,35 @@
+{% extends '../wrapper.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {% block title %} <title>Savatcha | {{ request.user.username }}</title>{% endblock %}
+<div class="adminx-content">
+<div class="adminx-main-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="card p-5">
+                <div class="card-header">
+                    <h2>Buyurtma</h2>
+                </div>
+               <div class="row">
+                   <div class="col-sm-10">
+                        <div class="mt-2">
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <input type="submit" class="btn btn-outline-info" value="Tasdiqlash">
+                            </form>
+                        </div>
+                   </div>
+               </div>
+            </div>
+
+
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

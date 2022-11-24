@@ -1,0 +1,56 @@
+{% extends '../wrapper.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {% block title %} <title>Savatcha | {{ request.user.username }}</title>{% endblock %}
+<div class="adminx-content">
+<div class="adminx-main-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="card p-5">
+                <div class="card-header">
+                    <h2>Buyurtma barildi !</h2>
+                </div>
+               <div class="row">
+                   <div class="col-sm-6">
+                        <div class="mt-2">
+                            <ul>
+                                <li>Buyurtmachi : <strong>{{ order.name }}</strong>   </li>
+                                <li>Viloyat : <strong>{{ order.state }}</strong></li>
+                                <li>Manzil : <strong>{{ order.address }}</strong></li>
+                                <li>Telefon : <strong>{{ order.phone }}</strong></li>
+                                <li>Umumiy summa : <strong>${{ order.total_sum }}</strong></li>
+                            </ul>
+
+                        </div>
+                   </div>
+                   <div class="col-sm-6">
+                       <ul class="list-unstyled">
+                           {% for product in order.products.all %}
+                               <br>
+                             <li class="d-block">
+                                 <img src="{{ product.product.image.url }}"
+                                      width="50"
+                                      style="float:left; margin-top: 10px;" alt="">
+                                 <h5 style="margin-left:20px;">{{ product.product.name }}</h5>
+                             </li>
+                               <br>
+                           {% endfor %}
+                       </ul>
+                       <br>
+                       <a href="/" class="btn btn-primary">
+                           Bosh sahifa
+                       </a>
+                   </div>
+               </div>
+            </div>
+
+
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

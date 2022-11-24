@@ -1,0 +1,28 @@
+{% extends 'account/base.html' %}
+
+{% block content %}
+<main>
+	<div class="container">
+		<div class="row">
+			<div class="col s6">
+				<h5></h5>
+				<h5>{{request.user.username}}</h5>
+				{% for data in data.values %}
+					<li>{{data.location}}</li>
+					<li>{{data.company}}</li>
+					<li>{{data.created_at}}</li>
+					<li>{{data.followers}}</li>
+				
+				{% endfor %}
+			</div>
+			<div class="col s6">
+				{% if user.socialaccount_set.all.0.get_avatar_url %}
+				<img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="responsive-img" alt="">
+				{% else%}
+				<img src="https://ced-iadr2021.com/wp-content/uploads/2021/06/no-user-image.gif" alt="" class="responsive-img">
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</main>
+{% endblock %}

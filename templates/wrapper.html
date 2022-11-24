@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>NikeStore | Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="/static/dist/css/adminx.css" media="screen" />
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <!-- Compiled and minified CSS -->
+
+    <!--
+      # Optional Resources
+      Feel free to delete these if you don't need them in your project
+    -->
+      <script>
+  if ( window.history.replaceState ) {
+   window.history.replaceState( null, null, window.location.href );
+  }
+</script>
+    <script src="../../myMovie/staticfiles/js/init.js"></script>
+  </head>
+  <body>
+
+    <div class="adminx-container">
+      <nav class="navbar navbar-expand justify-content-between fixed-top">
+        <a class="navbar-brand mb-0 h1 d-none d-md-block" href="{% url 'shop:home' %}">
+          <img src="/static/img/nike.png" class="navbar-brand-image d-inline-block align-top mr-2" alt="">
+          NikeStore
+        </a>
+
+        <form class="form-inline form-quicksearch d-none d-md-block mx-auto">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-icon">
+                <i data-feather="search"></i>
+              </div>
+            </div>
+            <input
+               type="text"
+               class="form-control"
+               id="search"
+               placeholder="Tovar izlash..."
+               onkeyup="liveSearch(this.value)"
+            />
+          </div>
+        </form>
+
+        <div class="d-flex flex-1 d-block d-md-none">
+          <a href="#" class="sidebar-toggle ml-3">
+            <i data-feather="menu"></i>
+          </a>
+        </div>
+
+        <ul class="navbar-nav d-flex justify-content-end mr-2">
+          <!-- Notificatoins -->
+          <li class="nav-item dropdown d-flex align-items-center mr-2">
+            <a class="nav-link nav-link-notifications" id="dropdownNotifications" data-toggle="dropdown" href="#">
+              <i data-feather="shopping-cart" class=" display-inline-block align-middle"></i>
+              <span class="nav-link-notification-number">
+                  {% if cart.total_quantity %}
+                      {{ cart.total_quantity }}
+                  {% else %}
+                      0
+                  {% endif %}
+
+              </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-notifications" aria-labelledby="dropdownNotifications">
+              <div class="notifications-header d-flex justify-content-between align-items-center">
+                <span class="notifications-header-title">
+                  Savatchadagi barcha tovarlar
+                </span>
+                <a href="{% url 'cart:remove' %}" class="d-flex"><big>
+                    <i data-feather="trash-2"></i></big>
+                </a>
+              </div>
+
+              <div class="list-group">
+                  {% for cart in cart.products.all %}
+                      {% with cart as product %}
+                          <a href="/cart/" class="list-group-item list-group-item-action unread">
+                                 <p class="float-right">
+                                    <img src="{{ product.product.image.url }}" width="80" alt="">
+                                </p>
+                              <p class="mb-1">
+                                   <span>Nomi :</span><strong> {{ product.product.name }}</strong>
+                                  <br>
+                                 <span>Narxi :</span><strong>${{ product.product.price }}</strong>
+                                 <span>Umumiy narxi : <strong>${{ product.get_total_price }}</strong></span>
+
+                              </p>
+                            </a>
+                      {% endwith %}
+
+                  {% endfor %}
+              </div>
+
+              <div class="notifications-footer text-center">
+                <a href="{% url 'cart:cart'  %}"><small>Barcha tovarlarni ko'rish</small></a>
+              </div>
+            </div>
+          </li>
+          <!-- Notifications -->
+          <li class="nav-item dropdown">
+            <a class="nav-link avatar-with-name" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#">
+                {% if request.user.is_authenticated %}
+                    {% if user.socialaccount_set.all.0.get_avatar_url %}
+                         <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}" class="d-inline-block align-top" alt="">
+                    {% else %}
+                       <img src="/static/img/man.png" class="d-inline-block align-top" alt="">
+                    {% endif %}
+
+                {% else %}
+                    <img src="/static/img/man.png" class="d-inline-block align-top" alt="">
+                {% endif %}
+
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+
+
+              {% if request.user.is_authenticated %}
+              <a class="dropdown-item text-danger"
+               href="{% url 'account_logout' %}">
+                <i data-feather="arrow-right"></i>Chiqish </a>
+              <a class="dropdown-item text-danger" 
+              href="{% url 'account_change_password' %}">
+              <i data-feather="lock"></i>Parolni o'zgartirish </a>
+              {% else %}
+              <a class="dropdown-item text-danger" href="{% url 'account_login' %}">Kirish</a>
+              <a class="dropdown-item text-danger" href="{% url 'account_signup' %}">A'zo bo'lish</a>
+              {% endif %}
+                   <div class="dropdown-divider"></div>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- expand-hover push -->
+
+    <div class="message info-hide" id="info">
+        <div class="info">
+            <h5>Tovar savatchaga qo'shildi !
+                <a
+                    href="#"
+                    class="float-lg-right font-weight-normal"
+                    onclick="document.getElementById('info').classList = ['message info-hide']"
+                >
+                    <i data-feather="x-square"></i>
+                </a>
+            </h5>
+
+        </div>
+    </div>
+
+      <!-- Sidebar -->
+      <div class="adminx-sidebar expand-hover push">
+        <ul class="sidebar-nav">
+          <li class="sidebar-nav-item">
+            <a href="{% url 'shop:home' %}" class="sidebar-nav-link active">
+              <span class="sidebar-nav-icon">
+                <i data-feather="home"></i>
+              </span>
+              <span class="sidebar-nav-name">
+                Bosh sahifa
+              </span>
+              <span class="sidebar-nav-end">
+
+              </span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a class="sidebar-nav-link collapsed" data-toggle="collapse" href="#example" aria-expanded="false" aria-controls="example">
+              <span class="sidebar-nav-icon">
+                <i data-feather="pie-chart"></i>
+              </span>
+              <span class="sidebar-nav-name">
+                Kategoriyalar
+              </span>
+              <span class="sidebar-nav-end">
+                <i data-feather="chevron-right" class="nav-collapse-icon"></i>
+              </span>
+            </a>
+
+            <ul class="sidebar-sub-nav collapse" id="example">
+              {% for cat in categories %}
+              <li class="sidebar-nav-item">
+                <a href="{{cat.get_absolute_url}}" class="sidebar-nav-link">
+                  <span class="sidebar-nav-abbr">
+                    {{cat.name|slice:'2'}}
+                  </span>
+                  <span class="sidebar-nav-name">
+                    {{cat.name}}
+                  </span>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a class="sidebar-nav-link collapsed" data-toggle="collapse" href="#navTables" aria-expanded="false" aria-controls="navTables">
+              <span class="sidebar-nav-icon">
+                <i data-feather="align-justify"></i>
+              </span>
+              <span class="sidebar-nav-name">
+                Teglar
+              </span>
+              <span class="sidebar-nav-end">
+                <i data-feather="chevron-right" class="nav-collapse-icon"></i>
+              </span>
+            </a>
+
+            <ul class="sidebar-sub-nav collapse" id="navTables">
+              {% for tag in tags %}
+              <li class="sidebar-nav-item">
+                <a href="{{tag.get_absolute_url}}" class="sidebar-nav-link">
+                  <span class="sidebar-nav-abbr">
+                    {{tag.name|slice:'2'}}
+                  </span>
+                  <span class="sidebar-nav-name">
+                    {{tag.name}}
+                  </span>
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+
+
+          <li class="sidebar-nav-item">
+            <a class="sidebar-nav-link collapsed" data-toggle="collapse" href="#navExtra" aria-expanded="false" aria-controls="navExtra">
+              <span class="sidebar-nav-icon">
+                <i data-feather="layers"></i>
+              </span>
+              <span class="sidebar-nav-name">
+                Boshqa sahifalar
+              </span>
+              <span class="sidebar-nav-end">
+                <i data-feather="chevron-right" class="nav-collapse-icon"></i>
+              </span>
+            </a>
+
+            <ul class="sidebar-sub-nav collapse" id="navExtra">
+              <li class="sidebar-nav-item">
+                <a href="./layouts/login.html" class="sidebar-nav-link">
+                  <span class="sidebar-nav-abbr">
+                    Al
+                  </span>
+                  <span class="sidebar-nav-name">
+                    Aloqa
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- Sidebar End -->
+      <div class="liveSearch">
+        <div class="m-2" id="results">
+
+        </div>
+      </div>
+      {% block content %}
+      {% endblock %}
+          <!-- If you prefer jQuery these are the required scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="/static/dist/js/vendor.js"></script>
+    <script src="/static/dist/js/adminx.js"></script>
+    <script src="/static/cart.js"></script>
+
+    <!-- If you prefer vanilla JS these are the only required scripts -->
+    <!-- script src="./dist/js/vendor.js"></script>
+    <script src="./dist/js/adminx.vanilla.js"></script-->
+  </body>
+</html>

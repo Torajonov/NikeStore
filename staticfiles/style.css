@@ -1,0 +1,63 @@
+.liveSearch{
+	width: 300px;
+	height: auto;
+	background-color: #d1ecf1;
+	border-radius: 10px;
+	padding:10px;
+	position: absolute;
+	left:45%;
+	z-index: 999;
+}
+@media(max-width: 768px){
+	.liveSearch{
+		display: none;
+	}
+}
+.color{
+	width: 20px;
+	height: 20px;
+	margin:5px;
+	display: inline-block;
+}
+.card-body a{
+	text-decoration: none;
+	font-size: 21px;
+	font-weight: bold;
+}
+.colors{
+	display: flex;
+
+}
+.colors > *{
+	display: inline-block;
+}
+.message{
+	position:fixed;
+	width: 20%;
+	right: 20px;
+	top: 65px;
+	transition:0.3s;
+	padding:10px;
+	z-index: 999;
+	min-height:60px;
+	background-color: orange;
+	border-radius: 5px;
+}
+.info-hide{
+	display: none;
+	transition:0.3s;
+	animation:info-transition 0.30s linear 1;
+}
+.info-show{
+	display: block;
+	transition:0.3s;
+	animation:info-transition 0.30s linear 1;
+}
+@keyframes info-transition{
+	from{
+		opacity:0.5;
+	}
+	to{
+		opacity:1;
+	}
+}

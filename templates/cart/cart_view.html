@@ -1,0 +1,84 @@
+{% extends '../wrapper.html' %}
+{% load static %}
+{% block content %}
+    {% block title %} <title>Savatcha | {{ request.user.username }}</title>{% endblock %}
+<div class="adminx-content">
+<div class="adminx-main-content">
+  <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <div class="card p-5">
+                <div class="card-header">
+                    <h2>Savatcha</h2>
+                </div>
+                  <table class="table ">
+                      <thead>
+                        <tr>
+                          <th>#Tovar id</th>
+                          <th>Tovar nomi</th>
+                          <th>Tovar soni</th>
+                          <th>Tovar narxi</th>
+                          <th>Umumiy narxi</th>
+                          <th>O'chirish</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <ol></ol>
+                      {% for cart in cart.products.all %}
+                      {% with cart as item %}
+                          <tr>
+                              <th scope="row">{{ item.product.id }}</th>
+                          <td>
+                              <a href="{% url 'shop:product_detail' item.product.id %}">
+                                  {{ item.product.name }}
+                              </a>
+                          </td>
+                          <td>
+                              {{ item.quantity }}
+                          </td>
+                          <td>
+                              <strong>${{ item.product.price }}</strong>
+                          </td>
+                          <td>
+                              <strong>${{ item.get_total_price}}</strong>
+                          </td>
+                          <td>
+                              <a href="{% url 'cart:delete' item.product.id item.quantity  %}" class="btn btn-outline-info">
+                                  <i data-feather="trash-2"></i>
+                              </a>
+                          </td>
+                        </tr>
+                      {% endwith %}
+                      {% endfor %}
+
+                      </tbody>
+                  <tfoot>
+                    <tr>
+                        <td>Savatcha tovarlari soni : <strong>{{ cart.total_quantity }}</strong></td>
+                        <td>Savatcha umumiy narxi : <strong>${{ cart.total_price }}</strong></td>
+                        <td>
+                            <a href="{% url 'cart:order_add' cart.id %}" class="btn btn-outline-info">
+                                Buyurtma
+                                <i data-feather="shopping-cart"></i>
+                            </a>
+                        </td>
+                        <td>
+
+                            <a href="{% url 'cart:remove' %}" class="btn btn-outline-info">
+                               <i data-feather="trash-2"></i>Savatchani tozalash
+
+                            </a>
+                        </td>
+                    </tr>
+                  </tfoot>
+                    </table>
+            </div>
+
+
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

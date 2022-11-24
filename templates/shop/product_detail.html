@@ -1,0 +1,156 @@
+{% extends "wrapper.html" %}
+{% load static %}
+{% block content %}
+    
+
+
+      <!-- adminx-content-aside -->
+      <div class="adminx-content">
+        <!-- <div class="adminx-aside">
+
+        </div> -->
+
+        <div class="adminx-main-content">
+          <div class="container-fluid">
+            <!-- BreadCrumb -->
+            <nav aria-label="breadcrumb" role="navigation">
+              <ol class="breadcrumb adminx-page-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Bosh sahifa</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tovar</li>
+              </ol>
+            </nav>
+
+            <div class="pb-3">
+              <h1>{{object.name}}</h1>
+            </div>
+
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header-title">So'ngi tovarlar</div>
+
+                    <nav class="card-header-actions">
+                      <a class="card-header-action" data-toggle="collapse" href="#card1" aria-expanded="false" aria-controls="card1">
+                        <i data-feather="minus-circle"></i>
+                      </a>
+                      
+                      <div class="dropdown">
+                        <a class="card-header-action" href="#" role="button" id="card1Settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i data-feather="settings"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="card1Settings">
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                      </div>
+
+                      <a href="#" class="card-header-action">
+                        <i data-feather="x-circle"></i>
+                      </a>
+                    </nav>
+                  </div>
+                  <div class="card-body collapse show" id="card1">
+
+                      <div class="row">
+                      <div class="col-sm-6">
+                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                          <div class="carousel-item active">
+                            <img class="d-block w-100 img-fluid" src="{{product.image.url}}">
+                          </div>
+                          {% for obj_img in product.product_images.all %}
+                          <div class="carousel-item">
+                            <img class="d-block w-100 img-fluid"  src="{{obj_img.image.url}}">
+                          </div>
+                          {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </div>
+
+                       </div>
+                        <div class="col-sm-6">
+                          <div class="card">
+
+                            <div class="card-body">
+                              <h3>{{product.name}}</h3>
+                              <p>{{product.description}}</p>
+                              <p>
+                                Narxi - <strong>$ {{object.price}}</strong>
+                                <br>
+                                Avvalgi narxi - 
+                                <strike>
+                                  <b>{{object.old_price}}</b> 
+                                </strike>
+                              </p>
+                              <p class="colors">
+                                Rangi - <div class="color"
+                                style="background-color: {{object.color}};"></div>
+                                <br>
+                                <div class="row">
+                                  <div class="col-sm-8">
+                                    Boshqa ranglari - 
+                                    {% for  color in object.other_colors.all %}
+                                    <div class="color"
+                                    style="background-color: {{color}};"></div>
+                                    {% endfor %}
+                                  </div>
+                                  <div class="col-sm-4">
+                                    Teglari - 
+                                    {% for tag in product.tag.all %}
+                                    <span class="badge badge-primary">{{tag.name}}</span>
+                                    {% endfor %}
+                                  </div>
+                                </div>                                
+                              </p>
+           
+                              <p>
+                                Obmorda - 
+                                {% if object.instock %}
+                                  Bor
+                                {% else %}
+                                  Yo'q
+                                {% endif %}
+                              </p>
+                              <p>Soni - {{object.count}}</p>
+                                <p>
+                                    <select class="custom-select" id="quantity">
+                                          <option value="1">Sonini belgilang</option>
+                                          <option value="2">2 ta</option>
+                                          <option value="3">3 ta</option>
+                                          <option value="4">4 ta</option>
+                                          <option value="5">5 ta</option>
+                                        </select>
+
+                                </p>
+                                   <a href="#" onclick="AddToCart({{ object.id }})" class="btn btn-primary">
+                                    <i data-feather='shopping-cart'></i>
+                                        Savatchaga olish
+                                  </a>
+                            </div>
+
+                          </div>
+                        </div>
+                       
+                      </div>
+                    
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
