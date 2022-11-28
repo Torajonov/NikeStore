@@ -18,7 +18,7 @@
     {% if socialaccount_providers %}
     <p>{% blocktrans with site.name as site_name %}Kirish uchun ijtiomoiy tarmoqlardan
         foydalaning,
-       YOKI <a href="{{ signup_url }}" class="btn blue darken-2">Ro'yhatdan o'tish</a>
+       YOKI <a href="{{ signup_url }}" class="btn blue darken-2">Ro'yhatdan o'ting</a>
      {{ site_name }} uchun{% endblocktrans %}</p>
 
     <div class="socialaccount_ballot">
@@ -32,8 +32,8 @@
     
 
     {% else %}
-    <p>{% blocktrans %}If you have not created an account yet, then please
-    <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+    <p>{% blocktrans %}Agar siz hali hisob yaratmagan bo'lsangiz, iltimos
+    <a href="{{ signup_url }}">Ro`yxatdan o`ting</a> first.{% endblocktrans %}</p>
     {% endif %}
   </div>
   <div class="col s6">
