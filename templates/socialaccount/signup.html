@@ -8,7 +8,7 @@
     <h1>{% trans "Sign Up" %}</h1>
 
 <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
-{{site_name}}. Yakuniy bosqich sifatida quyidagi shaklni to'ldiring:{% endblocktrans %}</p>
+{{site_name}}. Yakuniy bosqich sifatida quyidagi shaklni to`ldiring:{% endblocktrans %}</p>
 
 <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
   {% csrf_token %}
